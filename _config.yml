@@ -12,6 +12,7 @@ author: Niti Wattanasirichaigoon
 # --- List of links in the navigation bar --- #
 
 navbar-links:
+  Projects: ""
   About Me: "aboutme"
 #  Resources:
 #    - Beautiful Jekyll: "https://beautifuljekyll.com"
