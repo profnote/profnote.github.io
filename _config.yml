@@ -12,7 +12,7 @@ author: Niti Wattanasirichaigoon
 # --- List of links in the navigation bar --- #
 
 navbar-links:
-  Home: "index"
+#  Home: "index"
   Projects: "projects"
   About Me: "aboutme"
 #  Resources:
