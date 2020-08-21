@@ -18,7 +18,7 @@ navbar-links:
 #  Resources:
 #    - Beautiful Jekyll: "https://beautifuljekyll.com"
 #    - Learn markdown: "https://www.markdowntutorial.com/"
-  Resume: "https://profnote.github.io/docs/NitiResume2020Aug.pdf"
+  Resume: "/docs/NitiResume2020Aug.pdf"
 
 # --- Logo --- #
 
