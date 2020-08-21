@@ -12,12 +12,13 @@ author: Niti Wattanasirichaigoon
 # --- List of links in the navigation bar --- #
 
 navbar-links:
-#  Projects: ""
+  Home: "index"
+  Projects: "projects"
   About Me: "aboutme"
 #  Resources:
 #    - Beautiful Jekyll: "https://beautifuljekyll.com"
 #    - Learn markdown: "https://www.markdowntutorial.com/"
-  Resume: "https://deanattali.com"
+  Resume: "https://profnote.github.io/docs/NitiResume2020Aug.pdf"
 
 # --- Logo --- #
 
