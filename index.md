@@ -5,5 +5,5 @@ subtitle: to my personal website
 cover-img: /assets/img/pom.jpg
 ---
 
-My name is Niti. I'm interested in Data Science and Art.  
+My name is Niti. I'm interested in Data Science, Computer Vision and Art.  
 I like creating cool stuff related to these fields.
