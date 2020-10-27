@@ -2,22 +2,24 @@
 layout: post
 title: Color Scheme Analysis of Illustrations
 subtitle: A computational approach to determine Color Harmony
-cover-img: /assets/img/ColorHarmony/Slide1.PNG
+cover-img: /assets/img/ColorHarmony/hitenkei.jpg
 thumbnail-img: /assets/img/ColorHarmony/79059955_p0.png
 share-img: /assets/img/ColorHarmony/Slide1.PNG
 tags: [Illustration, Color Harmony, Clustering]
 ---
 
+![pic](/assets/img/ColorHarmony/Slide1.PNG)  
 This article introduces a method for extracting the main colors from images and classifying them by color harmony. The study itself focuses on what color schemes/harmonies are frequent among popular illustrations. This is not a tutorial so there will be no code snippets, but you can find all the codes to this study in my [Github repo](https://github.com/profnote/ColorHarmony).  
-# The Problem
+
+# The Color Harmony Problem
 ![pic](/assets/img/ColorHarmony/Slide2.PNG)
-In color theory, color harmony refers to the pleasing effect attained by using certain color combinations. Examples include the use of monochromatic (single color), analogous (neighboring colors), and complementary (opposite) colors. It is usually taught that using having these color harmonies will make your pictures more interesting, but there is no research to back this claim nor one that studies which color harmonies are the most commonly used.  
+In color theory, **color harmony** refers to the pleasing effect attained by using certain color combinations. Examples include the use of monochromatic (single color), analogous (neighboring colors), and complementary (opposite) colors. It is usually taught that using having these color harmonies will make your pictures more interesting, but there is no research to back this claim nor one that studies which color harmonies are the most commonly used.  
   
 In this study, *I will introduce a computational approach to extract the ‘main’ colors and identify the existing color harmonies of an image*. Out of personal interest, I conducted this study is over popular Japanese-style illustrations.  
   
 The dataset of images was gathered from Pixiv, Japan’s top website for digital artists. I gathered the top most 2551 popular illustrations under the ‘Original’ tag (to eliminate any bias from popular characters or series). The data was gathered on June 12th, 2020 using the Power Pixiv Downloader Chrome extension.  
 
-## Color Spaces and Chroma
+# Color Spaces and Chroma
 ![pic](/assets/img/ColorHarmony/Slide3.PNG)
 Before we dive into the methodology, let’s define some important vocabulary about color theory. **Color spaces** can be thought of the different ways we can represent a color. The most common color space, **RGB**, represents each color as a mixture of red, green, and blue light; each having a value range of 0 to 255; (0, 0, 0) being black and (255, 255, 255) being white.  
   
@@ -29,12 +31,12 @@ As a straight up first step analysis of color schemes, I plotted the average sat
 
 ## Chroma vs Value
 The problem with the above figure is that the visual difference between high and low saturations will actually be imperceptible at very low values as they will both appear black. Because of this conflict, we prefer to use the notion of **chroma**, or purity of a color instead of saturation. We can transform the saturation into chroma by multiplying it with the value since it ranges from 0 to 1.  
-![satchroma](/assets/img/ColorHarmony/Slide5.PNG)
+![satchroma](/assets/img/ColorHarmony/Slide5.png)
 
 Now plotting the chroma against the value of images in our dataset will give us a more intuitively accurate representation of images based on their brightness and color purity. Light and bright colored images are on the top left, vibrant and strong colors on the top right, and dark images at the bottom left of the plot. We can see that our dataset consists of mostly light and bright colors, this could possibly be the trend for popular illustrations on Pixiv.  
 ![chromavalue](/assets/img/ColorHarmony/Slide6.PNG)
 
-## Main Color Extraction
+# Main Color Extraction
 To extract the main colors of an image, we need a method that is able to group similar colors together. One method that achieves this and is commonly used in palette generators is k-means clustering. **K-means** is a clustering method that minimizes the squared Euclidian distances between data points. We can use this method to group similar colors together in the RGB color space and use the centroids (mean point) to represent each group’s color.  
   
 I first preprocessed the images in my dataset by resizing them into smaller images with the same dimensions (224 x 224 pixels) so that they can be easier stored as a numpy array. Resizing the images may cause some boundary pixels to blend with other colors, but the as long as main color areas remain the same color, we will get the same clusters in the end. Resizing images is not required for clustering, but since I’m working with thousands of images, it speeds up process by a significant amount.  
@@ -50,7 +52,7 @@ Colors that are almost black or white could cause problems with our harmony iden
 Recall that chroma can be thought of the purity of a color; high chroma means colorful, low chroma means greyish colors. We can calculate the average chroma of our color palette, then remove those colors that are significantly lower than the mean. This method will remove the relatively black and white colors from our color palette. In this example, I removed the colors that are one standard deviation lower than the mean chroma resulting in the removal of the near black/white colors. The coefficient that determines how many standard deviations down we want to keep our colors can be thought as a tolerance factor.  
 ![pic](/assets/img/ColorHarmony/Slide8.PNG)  
 
-## Color Harmony Identification
+# Color Harmony Identification
 After we got our palette of main colors, we can categorize them to the corresponding section on the RGB color wheel by their hues. We split the color wheel into 12 equally spaced slices (because color harmony definitions are based on spitting the color wheel into 3 primary, 3 secondary, and 6 tertiary colors) and specify the representative colors whose range includes our main color hues. If we indicate the presence of a color in binary, we can produce a circular array that represents the main colors in our image.  
   
 ![wheel color representation](/assets/img/ColorHarmony/Slide9.PNG)
@@ -80,19 +82,26 @@ This example shows how our clustering method fails to find the green color of th
   
 ## Dataset Color Harmony and Hue Distributions
 ### Harmony Distributions
-![harmony dist](/assets/img/ColorHarmony/Slide17.PNG){: .mx-auto.d-block :}  
+![harmony dist](/assets/img/ColorHarmony/Slide17.png)  
 By applying our method to the entire dataset, we can learn which color harmonies are common among the popular illustrations in Pixiv. We immediately see that our dataset consists of about 90% of images with analogous colors. Analogous (neighboring) colors are very easy to use in artwork and gives a pleasant effect. 
 
 ### Hue Distributions
-![hue dist](/assets/img/ColorHarmony/Slide18.PNG){: .mx-auto.d-block :}  
+![hue dist](/assets/img/ColorHarmony/Slide18.png)  
 From the array of wheel colors, we can also observe how common each hue range is present in our dataset. Surprisingly, images containing green hues make up less than 10% of all images, while images containing red and orange make up the majority of the dataset. A likely possibility is that red and orange are colors used to color human skin, and most images in Pixiv have human characters in them.
 
-## Conclusion
+# Conclusion
 We can summarize this study into the following main points:  
 * Chroma is advantageous over saturation during analysis because it is not affected by value/brightness.
 *	We can use k-means clustering with chroma cutoff to accurately extract the main colors from an image.
 *	Color harmony identification can be done through simple algorithms. No need for a predictive model!
 *	Most of the popular images on pixiv (our dataset) contains analogous color harmony and there is a common usage of red and orange colors.  
+
+### Future Work and Improvements
+* Cool and Warm color analysis
+* Applying the methodology to the RYB system
+* Create an online Demo  
+
+Though I haven't created an online demo for this project yet, I did publish a python package to PyPI named [**color-harmony**](https://pypi.org/project/color-harmony/), check it out!  
   
 Thank you for reaching the end of this article! I had fun working on this project as it started out of my personal interest. I hope this article is able to give you some insights or interest on the different ways we can analyze image data. I also plan to work on other projects related to digital illustrations or computer vision in the future whenever I have some free time, so stay tuned!
 
