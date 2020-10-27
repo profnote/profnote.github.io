@@ -12,12 +12,15 @@ This article introduces a method for extracting the main colors from images and 
 # The Problem
 ![pic](/assets/img/ColorHarmony/Slide2.PNG)
 In color theory, color harmony refers to the pleasing effect attained by using certain color combinations. Examples include the use of monochromatic (single color), analogous (neighboring colors), and complementary (opposite) colors. It is usually taught that using having these color harmonies will make your pictures more interesting, but there is no research to back this claim nor one that studies which color harmonies are the most commonly used.  
+  
 In this study, *I will introduce a computational approach to extract the ‘main’ colors and identify the existing color harmonies of an image*. Out of personal interest, I conducted this study is over popular Japanese-style illustrations.  
+  
 The dataset of images was gathered from Pixiv, Japan’s top website for digital artists. I gathered the top most 2551 popular illustrations under the ‘Original’ tag (to eliminate any bias from popular characters or series). The data was gathered on June 12th, 2020 using the Power Pixiv Downloader Chrome extension.  
 
 ## Color Spaces and Chroma
 ![pic](/assets/img/ColorHarmony/Slide3.PNG)
 Before we dive into the methodology, let’s define some important vocabulary about color theory. **Color spaces** can be thought of the different ways we can represent a color. The most common color space, **RGB**, represents each color as a mixture of red, green, and blue light; each having a value range of 0 to 255; (0, 0, 0) being black and (255, 255, 255) being white.  
+  
 Another popular color space is the **HSV** which stands for a color’s hue, saturation, and value. **Hue** is the baseline color taking a value of 0 to 360 corresponding to the angle on the RGB color wheel (0 being red), **saturation** is the vibrancy of a color and takes values between 0 and 1 (0 being completely in greyscale), and **value** representing the brightness of a color (a value of 0 will make the color completely black despite the hue and saturation).  
 
 ## Saturation vs Value
@@ -33,49 +36,55 @@ Now plotting the chroma against the value of images in our dataset will give us 
 
 ## Main Color Extraction
 To extract the main colors of an image, we need a method that is able to group similar colors together. One method that achieves this and is commonly used in palette generators is k-means clustering. **K-means** is a clustering method that minimizes the squared Euclidian distances between data points. We can use this method to group similar colors together in the RGB color space and use the centroids (mean point) to represent each group’s color.  
-
+  
 I first preprocessed the images in my dataset by resizing them into smaller images with the same dimensions (224 x 224 pixels) so that they can be easier stored as a numpy array. Resizing the images may cause some boundary pixels to blend with other colors, but the as long as main color areas remain the same color, we will get the same clusters in the end. Resizing images is not required for clustering, but since I’m working with thousands of images, it speeds up process by a significant amount.  
-
+  
 A processed image is flatten out into an array of pixels, with each pixel containing 3 values representing its RGB color. We can then plot the pixels in the RGB space to visualize the clusters of colors. Applying k-means clustering with the number of clusters of 10 (images usually don’t have more than 10 main colors) and coloring each cluster by the centroid will give us a clearer view of our color clusters.  
 ![pic](/assets/img/ColorHarmony/Slide7.PNG)
+  
 *For comparison on how k-means performs against other color extraction packages in python, please see the python notebook on my Github repo.* 
 
 ### Chroma Cutoff
 Colors that are almost black or white could cause problems with our harmony identification process; for example, a color that we perceive as white might actually have very small amounts of blue mixed in it but we do not want to consider the image as using the color blue if it appears white. One method we can use to extract the main colors is by setting a chroma cutoff, where we remove the relatively close to black and white colors from our palette based on the average chroma of all the colors.  
-
+  
 Recall that chroma can be thought of the purity of a color; high chroma means colorful, low chroma means greyish colors. We can calculate the average chroma of our color palette, then remove those colors that are significantly lower than the mean. This method will remove the relatively black and white colors from our color palette. In this example, I removed the colors that are one standard deviation lower than the mean chroma resulting in the removal of the near black/white colors. The coefficient that determines how many standard deviations down we want to keep our colors can be thought as a tolerance factor.  
-![pic](/assets/img/ColorHarmony/Slide8.PNG)
+![pic](/assets/img/ColorHarmony/Slide8.PNG)  
 
 ## Color Harmony Identification
 After we got our palette of main colors, we can categorize them to the corresponding section on the RGB color wheel by their hues. We split the color wheel into 12 equally spaced slices (because color harmony definitions are based on spitting the color wheel into 3 primary, 3 secondary, and 6 tertiary colors) and specify the representative colors whose range includes our main color hues. If we indicate the presence of a color in binary, we can produce a circular array that represents the main colors in our image.  
-
+  
 ![wheel color representation](/assets/img/ColorHarmony/Slide9.PNG)
 *Note that traditionally, color harmony is defined on the RYB (Red-Yellow-Blue) color wheel, but here we are defining color harmonies based on the RGB wheel so the results might be different from our intuition.*  
-
+  
 The circular arrays can then be used for identifying color harmonies through writing simple algorithms; for example, a monochromatic image will have only one color in the wheel, so the sum of the elements in the array will be equal to 1. We can also write algorithms to find the presence of nearby or opposite colors on the wheel simply by implementing loops and moduli.  
 ![harmony identification](/assets/img/ColorHarmony/Slide10.PNG)
 Now we can apply our entire method on different images in our dataset to see how it performs in extracting main colors and identifying color harmonies.  
 
-![eg1](/assets/img/ColorHarmony/Slide11.PNG)
+![eg1](/assets/img/ColorHarmony/Slide11.PNG)  
 If we were to use the RYB color wheel, this image would most likely also be classified as having a “triad” color harmony since it clearly contains the usage of red, yellow, and blue colors.  
-![eg2](/assets/img/ColorHarmony/Slide12.PNG)
+  
+![eg2](/assets/img/ColorHarmony/Slide12.PNG)  
 This illustration might look monochromatic at first glance but the colors actually range over two sections of the color wheel.  
-![eg3](/assets/img/ColorHarmony/Slide13.PNG)
+  
+![eg3](/assets/img/ColorHarmony/Slide13.PNG)  
 A prime example of a monochromatic image. Although we have 8 colors in our main palette, they all fall into the same segment of the color wheel.  
-![eg4](/assets/img/ColorHarmony/Slide14.PNG)
+  
+![eg4](/assets/img/ColorHarmony/Slide14.PNG)  
 This example shows how all the near black/white colors are kept after chroma cutoff because most of the colors in the image are not so vibrant (having low chroma values).  
-![eg5](/assets/img/ColorHarmony/Slide15.PNG)
+  
+![eg5](/assets/img/ColorHarmony/Slide15.PNG)  
 We can see here that the k-means clustering is really accurate at pulling out flat colors. The chroma cutoff also successfully removes the black and grey colors from our palette.  
-![eg6](/assets/img/ColorHarmony/Slide16.PNG)
+  
+![eg6](/assets/img/ColorHarmony/Slide16.PNG)  
 This example shows how our clustering method fails to find the green color of the pole in the middle of the image, possibly due to the relatively low area. A solution to this problem might be to increase the number of clusters (k).  
-
+  
 ## Dataset Color Harmony and Hue Distributions
 ### Harmony Distributions
-![harmony dist](/assets/img/ColorHarmony/Slide17.PNG)
+![harmony dist](/assets/img/ColorHarmony/Slide17.PNG){: .mx-auto.d-block :}  
 By applying our method to the entire dataset, we can learn which color harmonies are common among the popular illustrations in Pixiv. We immediately see that our dataset consists of about 90% of images with analogous colors. Analogous (neighboring) colors are very easy to use in artwork and gives a pleasant effect. 
 
 ### Hue Distributions
-![hue dist](/assets/img/ColorHarmony/Slide18.PNG)
+![hue dist](/assets/img/ColorHarmony/Slide18.PNG){: .mx-auto.d-block :}  
 From the array of wheel colors, we can also observe how common each hue range is present in our dataset. Surprisingly, images containing green hues make up less than 10% of all images, while images containing red and orange make up the majority of the dataset. A likely possibility is that red and orange are colors used to color human skin, and most images in Pixiv have human characters in them.
 
 ## Conclusion
