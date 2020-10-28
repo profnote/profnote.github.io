@@ -2,7 +2,7 @@
 layout: post
 title: Color Scheme Analysis of Illustrations
 subtitle: A computational approach to determine Color Harmony
-cover-img: /assets/img/ColorHarmony/hitenkei.jpg
+cover-img: /assets/img/ColorHarmony/49649473_p0.jpg
 thumbnail-img: /assets/img/ColorHarmony/thumb.png
 share-img: /assets/img/ColorHarmony/Slide1.PNG
 tags: [Illustration, Color Harmony, Clustering]
