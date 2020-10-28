@@ -20,7 +20,7 @@ In color theory, **color harmony** refers to the pleasing effect attained by usi
   
 In this study, *I will introduce a computational approach to extract the ‘main’ colors and identify the existing color harmonies of an image*. Out of personal interest, I conducted this study is over popular Japanese-style illustrations.  
   
-The dataset of images was gathered from Pixiv, Japan’s top website for digital artists. I gathered the top most 2551 popular illustrations under the ‘Original’ tag (to eliminate any bias from popular characters or series). The data was gathered on June 12th, 2020 using the Power Pixiv Downloader Chrome extension.  
+The dataset of images was gathered from *Pixiv*, Japan’s top website for digital artists. I gathered the top most 2551 popular illustrations under the ‘Original’ tag (to eliminate any bias from popular characters or series). The data was gathered on June 12th, 2020 using the *Powerful Pixiv Downloader Chrome extension*.  
 
 # Color Spaces and Chroma
 ![pic](/assets/img/ColorHarmony/Slide3.PNG)  
@@ -102,10 +102,10 @@ This example shows how our clustering method fails to find the green color of th
 ## Dataset Color Harmony and Hue Distributions
 ![harmony dist](/assets/img/ColorHarmony/Slide17-18.jpg)  
 ### Harmony Distributions 
-By applying our method to the entire dataset, we can learn which color harmonies are common among the popular illustrations in Pixiv. We immediately see that our dataset consists of about 90% of images with analogous colors. Analogous (neighboring) colors are very easy to use in artwork and gives a pleasant effect. 
+By applying our method to the entire dataset, we can learn which color harmonies are common among the popular illustrations in *Pixiv*. We immediately see that our dataset consists of about 90% of images with analogous colors. Analogous (neighboring) colors are very easy to use in artwork and gives a pleasant effect. 
 
 ### Hue Distributions
-From the array of wheel colors, we can also observe how common each hue range is present in our dataset. Surprisingly, images containing green hues make up less than 10% of all images, while images containing red and orange make up the majority of the dataset. A likely possibility is that red and orange are colors used to color human skin, and most images in Pixiv have human characters in them.
+From the array of wheel colors, we can also observe how common each hue range is present in our dataset. Surprisingly, images containing green hues make up less than 10% of all images, while images containing red and orange make up the majority of the dataset. A likely possibility is that red and orange are colors used to color human skin, and most images in *Pixiv* have human characters in them.
 
 # Conclusion
 We can summarize this study into the following main points:  
@@ -120,7 +120,7 @@ Some further improvements to this study may include:
 * Applying the methodology to the RYB system
 * Create an online Demo  
 
-Although I haven't created an online demo for this project yet, I published a python package to PyPI named [**color-harmony**](https://pypi.org/project/color-harmony/), check it out!  
+Although I haven't created an online demo for this project yet, I published a python package to *PyPI* named [**color-harmony**](https://pypi.org/project/color-harmony/), check it out!  
   
 Thank you for reaching the end of this article! I really had fun working on this project as it is also related to my hobby. Hopefully, this article is able to give you some insights or interest on the different ways we can analyze image data. I also plan to work on other projects related to digital illustrations or computer vision in the future whenever I have some free time, so stay tuned!
 
