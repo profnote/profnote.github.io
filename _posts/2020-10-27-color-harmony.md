@@ -100,7 +100,7 @@ We can see here that the k-means clustering is really accurate at pulling out fl
 This example shows how our clustering method fails to find the green color of the pole in the middle of the image, possibly due to the relatively low area. A solution to this problem might be to increase the number of clusters (k).  
   
 ## Dataset Color Harmony and Hue Distributions
-![harmony dist](/assets/img/ColorHarmony/Slide17-18.png)  
+![harmony dist](/assets/img/ColorHarmony/Slide17-18.jpg)  
 ### Harmony Distributions 
 By applying our method to the entire dataset, we can learn which color harmonies are common among the popular illustrations in Pixiv. We immediately see that our dataset consists of about 90% of images with analogous colors. Analogous (neighboring) colors are very easy to use in artwork and gives a pleasant effect. 
 
