@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Welcome!
-subtitle: to my website
+subtitle: 
 cover-img: /assets/img/pom.jpg
 ---
 
