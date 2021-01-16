@@ -8,7 +8,6 @@ share-img: /assets/img/ColorHarmony/Slide1.PNG
 tags: [Illustration, Color Harmony, Clustering]
 ---
 
-# Color Scheme Analysis of Illustrations
 ![pic](/assets/img/ColorHarmony/Slide1.PNG)  
   
 This article introduces a method for extracting the main colors from images and classifying them by color harmony. The study itself focuses on what color schemes/harmonies are frequent among popular illustrations. This is not a tutorial so there will be no code snippets, but you can find all the codes to this study in my [Github repo](https://github.com/profnote/ColorHarmony).  
